@@ -1,58 +1,28 @@
 {
-  "cleanUrls": true,
-  "trailingSlash": false,
-  "rewrites": [
+  "functions": {
+    "api/index.php": {
+      "runtime": "vercel-php@0.7.4"
+    }
+  },
+  "routes": [
     {
-      "source": "/",
-      "destination": "/index.php?page=medical/index"
+      "handle": "filesystem"
     },
     {
-      "source": "/medical",
-      "destination": "/index.php?page=medical/index"
+      "src": "/",
+      "dest": "/api/index.php?page=medical/index"
     },
     {
-      "source": "/dentist",
-      "destination": "/index.php?page=dentist/index"
+      "src": "/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)",
+      "dest": "/api/index.php?page=$1/$2"
     },
     {
-      "source": "/dieting",
-      "destination": "/index.php?page=dieting/index"
+      "src": "/([A-Za-z0-9-]+)",
+      "dest": "/api/index.php?page=$1"
     },
     {
-      "source": "/fatloss",
-      "destination": "/index.php?page=fatloss/index"
-    },
-    {
-      "source": "/gynecology",
-      "destination": "/index.php?page=gynecology/index"
-    },
-    {
-      "source": "/ophthalmology",
-      "destination": "/index.php?page=ophthalmology/index"
-    },
-    {
-      "source": "/pediatrics",
-      "destination": "/index.php?page=pediatrics/index"
-    },
-    {
-      "source": "/plasticsurgery",
-      "destination": "/index.php?page=plasticsurgery/index"
-    },
-    {
-      "source": "/skincare",
-      "destination": "/index.php?page=skincare/index"
-    },
-    {
-      "source": "/:theme/:page",
-      "destination": "/index.php?page=:theme/:page"
-    },
-    {
-      "source": "/:page",
-      "destination": "/index.php?page=:page"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/$1"
+      "src": "/(.*)",
+      "dest": "/api/index.php?page=$1"
     }
   ]
 }
