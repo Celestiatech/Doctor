@@ -1,12 +1,21 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
     RewriteBase /vishal/temapltes/Doctor/clinicmaster.dexignzone.com/
+
+    # Keep the home route on the default medical demo.
+    RewriteRule ^$ index.php?page=medical/index [QSA,L]
     
     # Serve actual files and directories directly
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
+
+    # Allow /theme/page style URLs, for example /dentist/about-us.
+    RewriteRule ^([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/?$ index.php?page=$1/$2 [QSA,L]
+
+    # Allow /theme to open that theme's homepage, for example /dentist.
+    RewriteRule ^([A-Za-z0-9-]+)/?$ index.php?page=$1 [QSA,L]
     
-    # Route to index.php
+    # Fallback to the PHP router for any remaining clean URLs.
     RewriteRule ^(.*)$ index.php?page=$1 [QSA,L]
     
     # Prevent direct access to certain files

@@ -7,8 +7,28 @@
 // Include slug generator functions
 require_once(__DIR__ . '/generate_slug.php');
 
+function resolveRequestedPage(?string $page): string
+{
+    $page = getSafePage((string) $page);
+
+    if ($page === '') {
+        return 'medical/index';
+    }
+
+    if (strpos($page, '/') === false) {
+        $themeIndex = __DIR__ . '/xhtml/' . $page . '/index.html';
+        if (is_file($themeIndex)) {
+            return $page . '/index';
+        }
+
+        return 'medical/' . $page;
+    }
+
+    return $page;
+}
+
 // Get the requested page
-$page = isset($_GET['page']) ? getSafePage($_GET['page']) : 'medical/index';
+$page = resolveRequestedPage(isset($_GET['page']) ? (string) $_GET['page'] : null);
 
 // Define base path for static files
 $basePath = __DIR__ . '/xhtml/';
@@ -43,12 +63,14 @@ $baseUrl = $scriptDir . '/xhtml/' . ($baseDirFromXhtml ? $baseDirFromXhtml . '/'
 // Read and process the HTML file
 $htmlContent = file_get_contents($requestedFile);
 
-// Inject base tag at the start of <head> so browsers resolve later asset URLs correctly.
-$baseTag = '<base href="' . $baseUrl . '">';
-if (stripos($htmlContent, '<head>') !== false) {
-    $htmlContent = preg_replace('/<head>/i', "<head>\n" . $baseTag, $htmlContent, 1);
-} else {
-    $htmlContent = str_replace('</head>', $baseTag . "\n</head>", $htmlContent);
+// Inject a base tag only when the template does not already define one.
+if (!preg_match('/<base\s[^>]*href=/i', $htmlContent)) {
+    $baseTag = '<base href="' . $baseUrl . '">';
+    if (stripos($htmlContent, '<head>') !== false) {
+        $htmlContent = preg_replace('/<head>/i', "<head>\n" . $baseTag, $htmlContent, 1);
+    } else {
+        $htmlContent = str_replace('</head>', $baseTag . "\n</head>", $htmlContent);
+    }
 }
 
 // Output the processed HTML

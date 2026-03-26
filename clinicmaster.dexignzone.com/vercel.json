@@ -4,71 +4,51 @@
   "rewrites": [
     {
       "source": "/",
-      "destination": "/xhtml/medical/index.html"
+      "destination": "/index.php?page=medical/index"
     },
     {
-      "source": "/about-us",
-      "destination": "/xhtml/medical/about-us.html"
+      "source": "/medical",
+      "destination": "/index.php?page=medical/index"
     },
     {
-      "source": "/appointment",
-      "destination": "/xhtml/medical/appointment.html"
+      "source": "/dentist",
+      "destination": "/index.php?page=dentist/index"
     },
     {
-      "source": "/blog-details",
-      "destination": "/xhtml/medical/blog-details.html"
+      "source": "/dieting",
+      "destination": "/index.php?page=dieting/index"
     },
     {
-      "source": "/blog-grid",
-      "destination": "/xhtml/medical/blog-grid.html"
+      "source": "/fatloss",
+      "destination": "/index.php?page=fatloss/index"
     },
     {
-      "source": "/blog-list-sidebar",
-      "destination": "/xhtml/medical/blog-list-sidebar.html"
+      "source": "/gynecology",
+      "destination": "/index.php?page=gynecology/index"
     },
     {
-      "source": "/coming-soon",
-      "destination": "/xhtml/medical/coming-soon.html"
+      "source": "/ophthalmology",
+      "destination": "/index.php?page=ophthalmology/index"
     },
     {
-      "source": "/contact-us",
-      "destination": "/xhtml/medical/contact-us.html"
+      "source": "/pediatrics",
+      "destination": "/index.php?page=pediatrics/index"
     },
     {
-      "source": "/faqs",
-      "destination": "/xhtml/medical/faqs.html"
+      "source": "/plasticsurgery",
+      "destination": "/index.php?page=plasticsurgery/index"
     },
     {
-      "source": "/patient-info",
-      "destination": "/xhtml/medical/patient-info.html"
+      "source": "/skincare",
+      "destination": "/index.php?page=skincare/index"
     },
     {
-      "source": "/pricing-table",
-      "destination": "/xhtml/medical/pricing-table.html"
+      "source": "/:theme/:page",
+      "destination": "/index.php?page=:theme/:page"
     },
     {
-      "source": "/service-detail",
-      "destination": "/xhtml/medical/service-detail.html"
-    },
-    {
-      "source": "/services",
-      "destination": "/xhtml/medical/services.html"
-    },
-    {
-      "source": "/team",
-      "destination": "/xhtml/medical/team.html"
-    },
-    {
-      "source": "/team-detail",
-      "destination": "/xhtml/medical/team-detail.html"
-    },
-    {
-      "source": "/testimonial",
-      "destination": "/xhtml/medical/testimonial.html"
-    },
-    {
-      "source": "/under-construction",
-      "destination": "/xhtml/medical/under-construction.html"
+      "source": "/:page",
+      "destination": "/index.php?page=:page"
     },
     {
       "source": "/(.*)",
