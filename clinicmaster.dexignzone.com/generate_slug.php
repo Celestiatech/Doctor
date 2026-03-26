@@ -41,11 +41,23 @@ function pageExists($page, $basePath = 'xhtml/') {
  * Get safe page name
  */
 function getSafePage($page) {
-    // Remove any dangerous characters
-    $page = preg_replace('/[^a-z0-9-]/', '', strtolower($page));
-    // Prevent directory traversal
-    $page = str_replace('..', '', $page);
-    return $page;
+    $page = strtolower(trim((string) $page));
+    $page = str_replace('\\', '/', $page);
+
+    // Prevent directory traversal while allowing nested template paths.
+    $segments = array_filter(explode('/', $page), static function ($segment) {
+        return $segment !== '' && $segment !== '.' && $segment !== '..';
+    });
+
+    $segments = array_map(static function ($segment) {
+        return preg_replace('/[^a-z0-9-]/', '', $segment);
+    }, $segments);
+
+    $segments = array_values(array_filter($segments, static function ($segment) {
+        return $segment !== '';
+    }));
+
+    return implode('/', $segments);
 }
 
 /**

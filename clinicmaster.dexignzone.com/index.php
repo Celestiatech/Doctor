@@ -13,9 +13,11 @@ $page = isset($_GET['page']) ? getSafePage($_GET['page']) : 'medical/index';
 // Define base path for static files
 $basePath = __DIR__ . '/xhtml/';
 $requestedFile = $basePath . $page . '.html';
+$resolvedBasePath = realpath($basePath);
+$resolvedRequestedFile = realpath($requestedFile);
 
 // Security: Prevent directory traversal
-if (strpos(realpath($requestedFile), realpath($basePath)) !== 0) {
+if ($resolvedRequestedFile !== false && strpos($resolvedRequestedFile, $resolvedBasePath) !== 0) {
     header("HTTP/1.0 403 Forbidden");
     exit('Access Denied');
 }
@@ -31,6 +33,24 @@ if (!file_exists($requestedFile) || is_dir($requestedFile)) {
 header('Content-Type: text/html; charset=utf-8');
 header('Cache-Control: public, max-age=3600');
 
-// Include the requested HTML file
-include($requestedFile);
+// Get the directory of the requested file to calculate correct base path
+$fileDir = dirname($requestedFile);
+$baseDirFromXhtml = str_replace($basePath, '', $fileDir);
+$scriptPath = str_replace('\\', '/', $_SERVER['SCRIPT_NAME'] ?? '');
+$scriptDir = rtrim(str_replace('/index.php', '', $scriptPath), '/');
+$baseUrl = $scriptDir . '/xhtml/' . ($baseDirFromXhtml ? $baseDirFromXhtml . '/' : '');
+
+// Read and process the HTML file
+$htmlContent = file_get_contents($requestedFile);
+
+// Inject base tag at the start of <head> so browsers resolve later asset URLs correctly.
+$baseTag = '<base href="' . $baseUrl . '">';
+if (stripos($htmlContent, '<head>') !== false) {
+    $htmlContent = preg_replace('/<head>/i', "<head>\n" . $baseTag, $htmlContent, 1);
+} else {
+    $htmlContent = str_replace('</head>', $baseTag . "\n</head>", $htmlContent);
+}
+
+// Output the processed HTML
+echo $htmlContent;
 ?>
