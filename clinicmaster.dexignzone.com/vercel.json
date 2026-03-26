@@ -1,0 +1,78 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/xhtml/medical/index.html"
+    },
+    {
+      "source": "/about-us",
+      "destination": "/xhtml/medical/about-us.html"
+    },
+    {
+      "source": "/appointment",
+      "destination": "/xhtml/medical/appointment.html"
+    },
+    {
+      "source": "/blog-details",
+      "destination": "/xhtml/medical/blog-details.html"
+    },
+    {
+      "source": "/blog-grid",
+      "destination": "/xhtml/medical/blog-grid.html"
+    },
+    {
+      "source": "/blog-list-sidebar",
+      "destination": "/xhtml/medical/blog-list-sidebar.html"
+    },
+    {
+      "source": "/coming-soon",
+      "destination": "/xhtml/medical/coming-soon.html"
+    },
+    {
+      "source": "/contact-us",
+      "destination": "/xhtml/medical/contact-us.html"
+    },
+    {
+      "source": "/faqs",
+      "destination": "/xhtml/medical/faqs.html"
+    },
+    {
+      "source": "/patient-info",
+      "destination": "/xhtml/medical/patient-info.html"
+    },
+    {
+      "source": "/pricing-table",
+      "destination": "/xhtml/medical/pricing-table.html"
+    },
+    {
+      "source": "/service-detail",
+      "destination": "/xhtml/medical/service-detail.html"
+    },
+    {
+      "source": "/services",
+      "destination": "/xhtml/medical/services.html"
+    },
+    {
+      "source": "/team",
+      "destination": "/xhtml/medical/team.html"
+    },
+    {
+      "source": "/team-detail",
+      "destination": "/xhtml/medical/team-detail.html"
+    },
+    {
+      "source": "/testimonial",
+      "destination": "/xhtml/medical/testimonial.html"
+    },
+    {
+      "source": "/under-construction",
+      "destination": "/xhtml/medical/under-construction.html"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/$1"
+    }
+  ]
+}
